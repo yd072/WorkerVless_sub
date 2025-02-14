@@ -44,6 +44,15 @@ let 网络备案 = `<a href='404'>优雅永不过时</a>`;//写你自己的维�
 let 额外ID = '0';
 let 加密方式 = 'auto';
 let 网站图标, 网站头像, 网站背景;
+
+// 添加分片配置对象
+const fragmentConfig = {
+	enabled: true,
+	packets: "tlshello", // 分片数量范围
+	length: "100-200", // 每个分片的长度范围
+	interval: "10-20" // 分片发送间隔(ms)
+};
+
 async function 整理优选列表(api) {
 	if (!api || api.length === 0) return [];
 
@@ -859,7 +868,12 @@ export default {
 							`tfo=true&` +
 							`keepAlive=true&` +
 							`congestion_control=bbr&` +
-							`udp_relay=true` +
+							`udp_relay=true&` +
+							// 添加分片参数
+							`fragment=true&` +
+							`fragmentPackets=${fragmentConfig.packets}&` +
+							`fragmentLength=${fragmentConfig.length}&` +
+							`fragmentInterval=${fragmentConfig.interval}` +
 							`#${encodeURIComponent(addressid + EndPS)}`;
 						return 维列斯Link;
 					}
@@ -897,7 +911,13 @@ export default {
 					const vmessLink = `vmess://${utf8ToBase64(`{"v":"2","ps":"${addressid + 节点备注}","add":"${parsedAddress}","port":"${port}","id":"${uuid}","aid":"${额外ID}","scy":"${加密方式}","net":"ws","type":"${type}","host":"${伪装域名}","path":"${最终路径}","tls":"tls","sni":"${sni}","alpn":"${encodeURIComponent(alpn)}","fp":""}`)}`;
 					return vmessLink;
 				} else if (协议类型 == atob('VHJvamFu')) {
-					const 特洛伊Link = `${atob('dHJvamFuOi8v') + uuid}@${parsedAddress}:${port + atob('P3NlY3VyaXR5PXRscyZzbmk9') + sni}&alpn=${encodeURIComponent(alpn)}&fp=randomized&type=${type}&host=${伪装域名}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + 节点备注)}`;
+					const 特洛伊Link = `${atob('dHJvamFuOi8v') + uuid}@${parsedAddress}:${port + atob('P3NlY3VyaXR5PXRscyZzbmk9') + sni}&alpn=${encodeURIComponent(alpn)}&fp=randomized&type=${type}&host=${伪装域名}&path=${encodeURIComponent(最终路径)}` +
+						// 添加分片参数
+						`&fragment=true` +
+						`&fragmentPackets=${fragmentConfig.packets}` +
+						`&fragmentLength=${fragmentConfig.length}` +
+						`&fragmentInterval=${fragmentConfig.interval}` +
+						`#${encodeURIComponent(addressid + 节点备注)}`;
 					return 特洛伊Link;
 				} else {
 					const 维列斯Link = `${atob('dmxlc3M6Ly8=') + uuid}@${parsedAddress}:${port}?` + 
@@ -909,10 +929,16 @@ export default {
 						`path=${encodeURIComponent(最终路径)}&` +
 						`alpn=${encodeURIComponent(alpn)}&` +
 						`fp=randomized&` +
+						`allowInsecure=false&` +  
 						`tfo=true&` +
 						`keepAlive=true&` +
 						`congestion_control=bbr&` +
-						`udp_relay=true` +
+						`udp_relay=true&` +
+						// 添加分片参数
+						`fragment=true&` +
+						`fragmentPackets=${fragmentConfig.packets}&` +
+						`fragmentLength=${fragmentConfig.length}&` +
+						`fragmentInterval=${fragmentConfig.interval}` +
 						`#${encodeURIComponent(addressid + 节点备注)}`;
 					return 维列斯Link;
 				}
