@@ -859,21 +859,16 @@ export default {
 						return vmessLink;
 					} else {
 						const 维列斯Link = `${atob('dmxlc3M6Ly8=') + uuid}@${address}:${port}?` + 
-							`${atob('ZW5jcnlwdGlvbj1ub25l')}&` +  // encryption=none
-							`${atob('c2VjdXJpdHk9')}&` +          // security=
+							`${atob('ZW5jcnlwdGlvbj1ub25l')}&` +  
+							`${atob('c2VjdXJpdHk9')}&` +          
 							`type=${type}&` +
 							`host=${host}&` +
 							`path=${encodeURIComponent(path)}&` +
 							`fp=randomized&` +
-							`tfo=true&` +
-							`keepAlive=true&` +
-							`congestion_control=bbr&` +
-							`udp_relay=true&` +
-							// 添加分片参数
-							`fragment=true&` +
-							`fragmentPackets=${fragmentConfig.packets}&` +
-							`fragmentLength=${fragmentConfig.length}&` +
-							`fragmentInterval=${fragmentConfig.interval}` +
+							`tfo=true&` +// 启用TCP Fast Open
+							`keepAlive=true&` +// 保持连接
+							`congestion_control=bbr&` +// 使用BBR拥塞控制
+							`udp_relay=true` +// 启用UDP转发
 							`#${encodeURIComponent(addressid + EndPS)}`;
 						return 维列斯Link;
 					}
@@ -911,34 +906,23 @@ export default {
 					const vmessLink = `vmess://${utf8ToBase64(`{"v":"2","ps":"${addressid + 节点备注}","add":"${parsedAddress}","port":"${port}","id":"${uuid}","aid":"${额外ID}","scy":"${加密方式}","net":"ws","type":"${type}","host":"${伪装域名}","path":"${最终路径}","tls":"tls","sni":"${sni}","alpn":"${encodeURIComponent(alpn)}","fp":""}`)}`;
 					return vmessLink;
 				} else if (协议类型 == atob('VHJvamFu')) {
-					const 特洛伊Link = `${atob('dHJvamFuOi8v') + uuid}@${parsedAddress}:${port + atob('P3NlY3VyaXR5PXRscyZzbmk9') + sni}&alpn=${encodeURIComponent(alpn)}&fp=randomized&type=${type}&host=${伪装域名}&path=${encodeURIComponent(最终路径)}` +
-						// 添加分片参数
-						`&fragment=true` +
-						`&fragmentPackets=${fragmentConfig.packets}` +
-						`&fragmentLength=${fragmentConfig.length}` +
-						`&fragmentInterval=${fragmentConfig.interval}` +
-						`#${encodeURIComponent(addressid + 节点备注)}`;
+					const 特洛伊Link = `${atob('dHJvamFuOi8v') + uuid}@${parsedAddress}:${port + atob('P3NlY3VyaXR5PXRscyZzbmk9') + sni}&alpn=${encodeURIComponent(alpn)}&fp=randomized&type=${type}&host=${伪装域名}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + 节点备注)}`;
 					return 特洛伊Link;
 				} else {
 					const 维列斯Link = `${atob('dmxlc3M6Ly8=') + uuid}@${parsedAddress}:${port}?` + 
-						`${atob('ZW5jcnlwdGlvbj1ub25l')}&` +  // encryption=none
-						`${atob('c2VjdXJpdHk9dGxz')}&` +      // security=tls
-						`${atob('c25pPQ==')}${sni}&` +        // sni=
+						`${atob('ZW5jcnlwdGlvbj1ub25l')}&` +  
+						`${atob('c2VjdXJpdHk9dGxz')}&` +      
+						`${atob('c25pPQ==')}${sni}&` +        
 						`type=${type}&` +
 						`host=${伪装域名}&` +
 						`path=${encodeURIComponent(最终路径)}&` +
 						`alpn=${encodeURIComponent(alpn)}&` +
 						`fp=randomized&` +
 						`allowInsecure=false&` +  
-						`tfo=true&` +
-						`keepAlive=true&` +
-						`congestion_control=bbr&` +
-						`udp_relay=true&` +
-						// 添加分片参数
-						`fragment=true&` +
-						`fragmentPackets=${fragmentConfig.packets}&` +
-						`fragmentLength=${fragmentConfig.length}&` +
-						`fragmentInterval=${fragmentConfig.interval}` +
+						`tfo=true&` + // 启用TCP Fast Open
+						`keepAlive=true&` +// 保持连接
+						`congestion_control=bbr&` +// 使用BBR拥塞控制
+						`udp_relay=true` +// 启用UDP转发
 						`#${encodeURIComponent(addressid + 节点备注)}`;
 					return 维列斯Link;
 				}
