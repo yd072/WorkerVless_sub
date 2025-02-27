@@ -386,42 +386,12 @@ function 生成动态UUID(密钥) {
 	return Promise.all([当前UUIDPromise, 上一个UUIDPromise, 到期时间字符串]);
 }
 
-function 生成随机噪声(UA = '') {
-	// 生成随机噪声参数
-	const 噪声列表 = [
-		`t=${Date.now()}`,
-		`neko=${Math.random().toString(36).substring(7)}`,
-		`timestamp=${Math.floor(Math.random() * 1000000)}`,
-		`auth=${btoa(Math.random().toString()).substring(10, 15)}`,
-		`mux=${Math.random() > 0.5 ? 'true' : 'false'}`,
-		`level=${Math.floor(Math.random() * 10)}`,
-		`pbk=${btoa(Math.random().toString()).substring(5, 15)}`,
-		`sid=${Math.random().toString(36).substring(5)}`,
-		`spx=${Math.random() > 0.5 ? 'true' : 'false'}`,
-		`client=${['chrome','firefox','safari','edge'][Math.floor(Math.random() * 4)]}`,
-		`zone=${['cn','hk','sg','us'][Math.floor(Math.random() * 4)]}`,
-		`ver=${Math.floor(Math.random() * 5) + 1}.${Math.floor(Math.random() * 10)}`
-	];
-
-	// 统一生成3-5个随机参数
-	const 数量 = Math.floor(Math.random() * 3) + 3;
-
-	// 随机打乱并选择参数
-	return 噪声列表
-		.sort(() => Math.random() - 0.5)
-		.slice(0, 数量)
-		.join('&');
-}
-
 async function getLink(重新汇总所有链接) {
 	let 节点LINK = [];
 	let 订阅链接 = [];
 	for (let x of 重新汇总所有链接) {
 		if (x.toLowerCase().startsWith('http')) {
-			// 为订阅链接添加随机噪声
-			const 噪声 = 生成随机噪声();
-			const 分隔符 = x.includes('?') ? '&' : '?';
-			订阅链接.push(`${x}${分隔符}${噪声}`);
+			订阅链接.push(x);
 		} else {
 			节点LINK.push(x);
 		}
@@ -879,7 +849,7 @@ export default {
 						const vmessLink = `vmess://${utf8ToBase64(`{"v":"2","ps":"${addressid + EndPS}","add":"${address}","port":"${port}","id":"${uuid}","aid":"${额外ID}","scy":"${加密方式}","net":"ws","type":"${type}","host":"${host}","path":"${path}","tls":"","sni":"","alpn":"${encodeURIComponent(alpn)}","fp":""}`)}`;
 						return vmessLink;
 					} else {
-						const 维列斯Link = `${atob('dmxlc3M6Ly8=') + uuid}@${address}:${port + atob('P2VuY3J5cHRpb249bm9uZSZzZWN1cml0eT0mdHlwZT0=') + type}&host=${host}&path=${encodeURIComponent(path)}&${生成随机噪声(userAgent)}#${encodeURIComponent(addressid + EndPS)}`;
+						const 维列斯Link = `${atob('dmxlc3M6Ly8=') + uuid}@${address}:${port + atob('P2VuY3J5cHRpb249bm9uZSZzZWN1cml0eT0mdHlwZT0=') + type}&host=${host}&path=${encodeURIComponent(path)}#${encodeURIComponent(addressid + EndPS)}`;
 						return 维列斯Link;
 					}
 
@@ -916,10 +886,10 @@ export default {
 					const vmessLink = `vmess://${utf8ToBase64(`{"v":"2","ps":"${addressid + 节点备注}","add":"${parsedAddress}","port":"${port}","id":"${uuid}","aid":"${额外ID}","scy":"${加密方式}","net":"ws","type":"${type}","host":"${伪装域名}","path":"${最终路径}","tls":"tls","sni":"${sni}","alpn":"${encodeURIComponent(alpn)}","fp":""}`)}`;
 					return vmessLink;
 				} else if (协议类型 == atob('VHJvamFu')) {
-					const 特洛伊Link = `${atob('dHJvamFuOi8v') + uuid}@${parsedAddress}:${port + atob('P3NlY3VyaXR5PXRscyZzbmk9') + sni}&alpn=${encodeURIComponent(alpn)}&fp=randomized&type=${type}&host=${伪装域名}&path=${encodeURIComponent(最终路径)}&${生成随机噪声(userAgent)}#${encodeURIComponent(addressid + 节点备注)}`;
+					const 特洛伊Link = `${atob('dHJvamFuOi8v') + uuid}@${parsedAddress}:${port + atob('P3NlY3VyaXR5PXRscyZzbmk9') + sni}&alpn=${encodeURIComponent(alpn)}&fp=randomized&type=${type}&host=${伪装域名}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + 节点备注)}`;
 					return 特洛伊Link;
 				} else {
-					const 维列斯Link = `${atob('dmxlc3M6Ly8=') + uuid}@${parsedAddress}:${port + atob('P2VuY3J5cHRpb249bm9uZSZzZWN1cml0eT10bHMmc25pPQ==') + sni}&alpn=${encodeURIComponent(alpn)}&fp=random&type=${type}&host=${伪装域名}&path=${encodeURIComponent(最终路径)}&${生成随机噪声(userAgent)}#${encodeURIComponent(addressid + 节点备注)}`;
+					const 维列斯Link = `${atob('dmxlc3M6Ly8=') + uuid}@${parsedAddress}:${port + atob('P2VuY3J5cHRpb249bm9uZSZzZWN1cml0eT10bHMmc25pPQ==') + sni}&alpn=${encodeURIComponent(alpn)}&fp=random&type=${type}&host=${伪装域名}&path=${encodeURIComponent(最终路径)}#${encodeURIComponent(addressid + 节点备注)}`;
 					return 维列斯Link;
 				}
 			});
