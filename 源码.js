@@ -522,15 +522,15 @@ function handleProxyIP(addressid, address, defaultPath) {
 
   const matchingProxyIP = proxyIPPool.find(proxyIP => proxyIP.includes(address));
   if (matchingProxyIP) {
-    return atob('Lz9lZD0yNTYwJnByb3h5aXA9') + matchingProxyIP;
+    return atob('L3Byb3h5aXA9') + matchingProxyIP;
   }
   
   if (foundProxyIP) {
-    return atob('Lz9lZD0yNTYwJnByb3h5aXA9') + foundProxyIP;
+    return atob('L3Byb3h5aXA9') + foundProxyIP;
   }
 
   const randomProxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
-  return atob('Lz9lZD0yNTYwJnByb3h5aXA9') + randomProxyIP;
+  return atob('L3Byb3h5aXA9') + randomProxyIP;
 }
 
 export default {
@@ -836,11 +836,11 @@ export default {
 
 							if (foundProxyIP) {
 								// 如果找到匹配的proxyIP，赋值给path
-								path = atob('Lz9lZD0yNTYwJnByb3h5aXA9') + foundProxyIP;
+								path = atob('L3Byb3h5aXA9') + foundProxyIP;
 							} else {
 								// 如果没有找到匹配项，随机选择一个proxyIP
 								const randomProxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
-								path = atob('Lz9lZD0yNTYwJnByb3h5aXA9') + randomProxyIP;
+								path = atob('L3Byb3h5aXA9') + randomProxyIP;
 							}
 						}
 					}
@@ -946,6 +946,7 @@ export default {
 						//"Content-Disposition": `attachment; filename*=utf-8''${encodeURIComponent(FileName)}; filename=${FileName}`,
 						"content-type": "text/plain; charset=utf-8",
 						"Profile-Update-Interval": `${SUBUpdateTime}`,
+						"Profile-web-page-url": url.origin,
 						//"Subscription-Userinfo": `upload=${UD}; download=${UD}; total=${total}; expire=${expire}`,
 					},
 				});
@@ -973,6 +974,7 @@ export default {
 					"Content-Disposition": `attachment; filename*=utf-8''${encodeURIComponent(FileName)}; filename=${FileName}`,
 					"content-type": "text/plain; charset=utf-8",
 					"Profile-Update-Interval": `${SUBUpdateTime}`,
+					"Profile-web-page-url": url.origin,
 					//"Subscription-Userinfo": `upload=${UD}; download=${UD}; total=${total}; expire=${expire}`,
 				},
 			});
